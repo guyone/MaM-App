@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row venue-list-con">
+       <div class="col">
+           <div class="page-title">
+               <span>List of Venues</span>
+           </div>
+        
+    
+            {% for venue in venues %}
+                <div class="row list-entry">
+                    <div class="list-thumbnail">
+                        <img class="img-fluid rounded" src="{{ url_for('static', filename='uploads/venues/' + venue.username + '/imgs/' + venue.venue_pic) }}">
+                    </div>
+                    <div class="col list-details">
+                        <div>
+                            <span class="title"><a href="{{ venue.username }}">{{ venue.name }}</a></span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Location:</span> <span>{{ venue.city }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+        
+    
+</main>
+{% endblock content %}

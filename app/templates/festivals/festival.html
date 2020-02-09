@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <div class="row festival-con">
+                    <div class="col-4 vertical-center">
+                            <img class="img-fluid center festival-logo" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/logo/' + festival.logo) }}">
+                    </div>
+                    <div class="col-8">
+                        <div class="title">
+                            <span>{{ festival.name }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="stats">
+                                    <span class="subtitle">Founded:</span> <span>{{ festival.founded }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Status:</span class="subtitle"> <span>{{ festival.is_active }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Capacity:</span class="subtitle"> <span>{{ festival.capacity }}</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="stats">
+                                    <span class="subtitle">Phone:</span class="subtitle"> <span>{{ festival.phone_number }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Address:</span class="subtitle"> <span>{{ festival.unit_number }}-{{ festival.street_number }} {{ festival.street_name.title() }} {{ festival.city.title() }}, {{ festival.province }} {{ festival.postal_code }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row festival-con">
+                    <div class="col">
+                        <span class="title">NEWS</span>
+                        <div class="row news-entry">
+                            <div class="news-icon">
+                                <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                            </div>
+                            <div class="col news-article">
+                                <div class="row news-title">
+                                    <span>ArkenFire has entered the studio to record their debut full-length album!</span>
+                                </div>
+                                <div class="row news-date">
+                                    <span>December 21, 2019</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row festival-con">
+                    <div class="col">
+                        <span class="title">EVENTS</span>
+                        <div class="row event-entry">
+                            <div class="event-icon">
+                                <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                            </div>
+                            <div class="event-location">
+                                <div class="row event-date">
+                                    <span>May 15, 2020</span>
+                                </div>
+                                <div class="row event-venue">
+                                    <span>Muninn's Post</span>
+                                </div>
+                            </div>
+                            <div class="col event-details">
+                                <div class="row event-title">
+                                    <span>ArkenFire Release Party</span>
+                                </div>
+                                <div class="row event-bandlist">
+                                    <span>ArkenFire, OdinFist, Eden Echo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- Sidebar - Festival logo and social icons -->
+            <div class="col-4">
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/imgs/' + festival.festival_pic) }}" alt="{{ festival.name }}">
+                </div>
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/imgs/' + festival.grounds_map) }}" alt="{{ festival.name }}">
+                </div>
+                <div class="row links-con">
+                    <div class="col">
+                        <a href="{{ festival.website }}"><img class="img-fluid social-icon" src="/static/imgs/icons/website2.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ festival.facebook }}"><img class="img-fluid social-icon" src="/static/imgs/icons/facebook.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ festival.twitter }}"><img class="img-fluid social-icon" src="/static/imgs/icons/twitter.png"></a>
+                    </div> 
+                    <div class="col">
+                        <a href="{{ festival.instagram }}"><img class="img-fluid social-icon" src="/static/imgs/icons/instagram.png"></a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if current_user.admin %}
+        <div>
+            <input name="action" class="btn btn-outline-secondary" type="submit" value="EDIT FESTIVAL" onclick="window.location='{{ url_for('edit_festival', festival=festival.username) }}'"/>
+        </div>
+    {% endif %}
+</main>
+{% endblock content %}

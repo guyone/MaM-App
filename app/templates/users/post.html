@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <article class="user-post content-section">
+        <div class="media-body">
+            <div>
+                <img class="rounded-circle post-img" src="{{ url_for('static', filename='profile_pics/' + post.user.profile_pic) }}">
+            </div>
+            <div>
+                <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
+            </div>
+            <div class="article-content">
+                <p>{{ post.text }}</p>
+            </div>
+        </div>
+    </article>
+
+{% endblock content %}

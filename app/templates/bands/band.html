@@ -1,0 +1,119 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <div class="row band-con">
+                <div class="col-4">
+                        <img class="img-fluid center band-logo" src="{{ url_for('static', filename='uploads/bands/' + band.username + '/logo/' + band.logo) }}">
+                </div>
+                <div class="col-8">
+                    <div class="title">
+                        <span>{{ band.name }}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="stats">
+                                <span class="subtitle">genre:</span> <span>{{ band.genre.title() }}</span>
+                            </div>
+                            <div class="stats">
+                                <span class="subtitle">subgenres:</span> <span>{{ band.subgenre.title() }}</span>
+                            </div>
+                            <div class="stats">
+                                <span class="subtitle">Lyrical Themes:</span> <span>{{ band.lyrical_theme.title() }}</span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="stats">
+                                <span class="subtitle">Year formed in:</span> <span>{{ band.formed }}</span>
+                            </div>
+                            <div class="stats">
+                                <span class="subtitle">Status:</span> <span>{{ band.is_active }}</span>
+                            </div>
+                            <div class="stats">
+                                <span class="subtitle">City located in:</span> <span>{{ band.city.title() }}, {{ band.province }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row band-con">
+                <div class="col">
+                    <span class="title">NEWS</span>
+                    <div class="row news-entry">
+                        <div class="news-icon">
+                            <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                        </div>
+                        <div class="col news-article">
+                            <div class="row news-title">
+                                <span>ArkenFire has entered the studio to record their debut full-length album!</span>
+                            </div>
+                            <div class="row news-date">
+                                <span>December 21, 2019</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row band-con">
+                <div class="col">
+                    <span class="title">EVENTS</span>
+                    <div class="row event-entry">
+                        <div class="event-icon">
+                            <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                        </div>
+                        <div class="event-location">
+                            <div class="row event-date">
+                                <span>May 15, 2020</span>
+                            </div>
+                            <div class="row event-venue">
+                                <span>Muninn's Post</span>
+                            </div>
+                        </div>
+                        <div class="col event-details">
+                            <div class="row event-title">
+                                <span>ArkenFire Release Party</span>
+                            </div>
+                            <div class="row event-bandlist">
+                                <span>ArkenFire, OdinFist, Eden Echo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Sidebar - Band logo and social icons -->
+        <div class="col-4">
+            <div class="row img-con">
+                <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/bands/' + band.username + '/imgs/' + band.band_pic) }}" alt="{{ band.name }}">
+            </div>
+            <div class="row links-con">
+                <div class="col">
+                    <a href="{{ band.website }}"><img class="img-fluid social-icon" src="/static/imgs/icons/website2.png"></a>
+                </div>
+                <div class="col">
+                    <a href="{{ band.bandcamp }}"><img class="img-fluid social-icon" src="/static/imgs/icons/bandcamp.png"></a>
+                </div> 
+                <div class="col">
+                    <a href="{{ band.facebook }}"><img class="img-fluid social-icon" src="/static/imgs/icons/facebook.png"></a>
+                </div>
+                <div class="col">
+                    <a href="{{ band.twitter }}"><img class="img-fluid social-icon" src="/static/imgs/icons/twitter.png"></a>
+                </div> 
+                <div class="col">
+                    <a href="{{ band.instagram }}"><img class="img-fluid social-icon" src="/static/imgs/icons/instagram.png"></a>
+                </div> 
+            </div>
+        </div>
+    </div>
+    {% if current_user.admin %}
+        <div>
+            <input name="action" class="btn btn-outline-secondary" type="submit" value="EDIT BAND" onclick="window.location='{{ url_for('edit_band', band=band.username) }}'"/>
+        </div>
+    {% endif %}
+</main>
+{% endblock content %}

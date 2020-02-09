@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col main-con">
+            <div class="content-section edit-con">
+                <div>
+                    <p>You have logged out of Metal as Medicine. Thank you for visiting!</p>
+                </div>
+                <div>
+                    <p>If you have done this in error you can log back in <a href="{{ url_for('login') }}">here</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

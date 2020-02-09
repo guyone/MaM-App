@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col-9 main-con">
+            <div class="settings-con">
+                <div class="content-section settings-email">
+                    <div class="title"><legend>Change email</legend></div>
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <div class="form-group">
+                                {% if form.password.errors %}
+                                    {{ form.password(class="form-control  is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.password(class="form-control input-form", placeholder="Current Password") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.email.label(class="form-control-label") }}
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control input-form", placeholder="New Email Address") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="row form-group">
+                            <div class="col">
+                                {{ form.submit(class="btn btn-outline-secondary") }}
+                            </div>
+                            <div class="col">
+                                <input name="action" class="btn btn-outline-secondary" type="submit" value="GO BACK" onclick="history.back()"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="settings-awards">
+                <div class="row">
+                    <div class="col mb-2 title">
+                        <span>Awards</span>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if user.confirmed %}
+                        <div class="col-2">
+                                <img class="icon" src="/static/imgs/awards/confirmed.png">
+                        </div>
+                        <div class="col-8 align-self-center">
+                            <span>Confirmed Email</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

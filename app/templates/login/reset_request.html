@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col main-con">
+            <div class="settings-con">
+                <div class="content-section edit-con">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <legend class="mb-4">Reset your password</legend>
+                            <p>You may have forgotten your password. This is normal as we are only human after all! We can help you out by emailing you a link to reset your password. Enter the email address associated with your account below.</p>
+                            <div class="form-group">
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control form-control-sm is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control input-form", placeholder="Email") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-secondary") }}
+                        </div>
+                    </form>
+                    <div>
+                        <small>
+                            <a href="{{ url_for('login') }}">LOGIN</a> | <a href="{{ url_for('register') }}">REGISTER</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

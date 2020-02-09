@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row promoters-list-con">
+       <div class="col">
+           <div class="page-title">
+               <span>List of promoters</span>
+           </div>
+        
+    
+            {% for promoter in promoters %}
+                <div class="row list-entry">
+                    <div class="list-thumbnail">
+                        <img class="img-fluid" src="{{ url_for('static', filename='uploads/promoters/' + promoter.username + '/imgs/' + promoter.profile_pic) }}">
+                    </div>
+                    <div class="col list-details">
+                        <div>
+                            <span class="title"><a href="{{ promoter.username }}">{{ promoter.name.title() }}</a></span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Location:</span> <span>{{ promoter.city.title() }}</span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Genre:</span> <span>{{ promoter.genre.title() }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+        
+    
+</main>
+{% endblock content %}

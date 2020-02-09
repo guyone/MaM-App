@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col main-con">
+            <div class="content-section login-form">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="mb-4">Log in to Metal as Medicine</legend>
+                        <div class="form-group">
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.email(class="form-control input-form", placeholder="Email") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-control is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.password(class="form-control input-form", placeholder="Password") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-check">
+                            {{ form.remember(class="form-check-input") }}
+                            {{ form.remember.label(class="form-check-label") }}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-secondary") }}
+                    </div>
+                </form>
+                <div class="mb-2">
+                    <small class="text-muted">
+                        <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                    </small>
+                </div>
+                <div>
+                    <small>
+                        Do you need an account? <a href="{{ url_for('register') }}">REGISTER</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    
+
+{% endblock content %}

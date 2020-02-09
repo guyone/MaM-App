@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container-fluid">
+    <div class="row user-list-con">
+       <div class="col">
+        <div class="page-title">
+            <span>List of Users</span>
+        </div>
+        
+    
+            {% for user in users %}
+                <div class="row list-entry">
+                    <div class="list-thumbnail">
+                        <img class="img-fluid rounded" src="{{ url_for('static', filename='uploads/users/' + user.username + '/imgs/' + user.profile_pic) }}">
+                    </div>
+                    <div class="col list-details">
+                        <div>
+                            <span class="title"><a href="/u/{{ user.username }}">{{ user.username }}</a></span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+        
+    
+</main>
+
+{% endblock content %}

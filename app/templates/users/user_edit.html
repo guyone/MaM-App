@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col main-con">
+            <div class="settings-con">
+                <div class="content-section edit-con">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Edit {{ user.username }}</legend>
+                            <div class="form-group">
+                                {{ form.username.label(class="form-control-label") }}
+
+                                {% if form.username.errors %}
+                                    {{ form.username(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.username(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.email.label(class="form-control-label") }}
+
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.admin.label(class="form-control-label") }}
+                                {% if form.admin.errors %}
+                                    {{ form.admin(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.admin.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.admin(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.promoter.label(class="form-control-label") }}
+                                {% if form.promoter.errors %}
+                                    {{ form.promoter(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.promoter.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.promoter(class="form-control") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-secondary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

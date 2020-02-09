@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="row main-events-list-con">
+                <div class="col page-title">
+                    <span>Recent Events</span>
+                </div>
+                <div class="col">
+                    {% for post in posts %}
+                        <article class="user-post content-section">
+                            <div class="media-body">
+                                <div>
+                                    <img class="rounded-circle post-img" src="{{ url_for('static', filename='imgs/' + post.user.profile_pic) }}">
+                                </div>
+                                <div>
+                                    <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
+                                </div>
+                                <div class="article-content">
+                                    <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
+                                    <p>{{ post.text }}</p>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6">
+            <div class="row main-news-list-con">
+                <div class="col page-title">
+                    <span>Recent News</span>
+                </div>
+                <div class="col">
+                    {% for post in posts %}
+                        <article class="user-post content-section">
+                            <div class="media-body">
+                                <div>
+                                    <img class="rounded-circle post-img" src="{{ url_for('static', filename='imgs/' + post.user.profile_pic) }}">
+                                </div>
+                                <div>
+                                    <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
+                                </div>
+                                <div class="article-content">
+                                    <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
+                                    <p>{{ post.text }}</p>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

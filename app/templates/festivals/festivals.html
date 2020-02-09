@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container-fluid">
+    <div class="row festival-list-con">
+       <div class="col">
+           <div class="page-title">
+               <span>List of Festivals</span>
+           </div>
+        
+    
+            {% for festival in festivals %}
+                <div class="row list-entry">
+                    <div class="list-thumbnail">
+                        <img class="img-fluid rounded" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/imgs/' + festival.festival_pic) }}">
+                    </div>
+                    <div class="col list-details">
+                        <div>
+                            <span class="title"><a href="{{ festival.username }}">{{ festival.name }}</a></span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Location:</span> <span>{{ festival.city }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+        
+    
+</main>
+
+{% endblock content %}

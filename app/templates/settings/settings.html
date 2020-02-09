@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <div class="row settings-con">
+                <div class="col">
+                    <div class="row">
+                        <div>
+                            <img class="img-fluid rounded settings-img" src="{{ url_for('static', filename='uploads/users/' + user.username + '/imgs/' + user.profile_pic) }}">
+                        </div>
+                        <div class="col settings-aligned">
+                            <span class="title">{{ user.username }}</span>  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col account-info">
+                            <span class="title">Account Info</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="subtitle">Account Birthday:</span><span> {{ user.created_on.strftime('%b %d, %Y') }}</span>
+                        </div>
+                    </div>
+                    <div class="row settings-email">
+                        <div class="col-5">
+                            <div>
+                                <span class="subtitle">Email Address:</span><span> {{ user.email }}</span>
+                            </div>
+                            {% if user.confirmed != True %}
+                                <div>
+                                    <span class=>(unconfirmed, <a href="{{ url_for('resend_confirmation') }}">Resend email</a>)</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            <input name="action" class="btn btn-outline-secondary" type="submit" value="CHANGE" onclick="window.location='{{ url_for('change_email') }}'"/>
+                        </div>
+                    </div>
+                    <div class="row settings-password">
+                        <div class="col-5">
+                            <span class="subtitle">Password</span>
+                        </div>
+                        <div class="col">
+                            <input name="action" class="btn btn-outline-secondary" type="submit" value="CHANGE" onclick="window.location='{{ url_for('change_password') }}'"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                {{ form.hidden_tag() }}
+                                <fieldset class="form-group">
+                                    <div class="form-group">
+                                        {{ form.profile_pic.label(class="form-control-label") }}
+                                        {% if form.profile_pic.errors %}
+                                            {% for error in form.profile_pic.errors %}
+                                            <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ form.profile_pic(class="form-control-file") }}
+                                        {% endif %}
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    {{ form.submit(class="btn btn-outline-secondary") }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="awards-con">
+                <div class="row">
+                    <span class="title">Awards</span>
+                </div>
+                <div class="row">
+                    {% if user.confirmed %}
+                        <div class="col-2">
+                                <img class="icon" src="/static/imgs/awards/confirmed.png">
+                        </div>
+                        <div class="col-8 align-self-center">
+                            <span>Confirmed Email</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

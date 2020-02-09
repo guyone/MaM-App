@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container-fluid">
+    <div class="row">
+        <div class="col login-con">
+            <div class="content-section login-form">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="mb-4">Join Metal as Medicine</legend>
+                        <p>Creating an account will allow you to explore and participate in the BC metal scene.</p>
+                        <p>Promoters must register for an account first then apply to become a promoter.</p>
+                        <div class="form-group">
+                            {% if form.username.errors %}
+                                {{ form.username(class="form-control is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.username(class="form-control input-form", placeholder="Username") }}
+                            {% endif %}
+                            <small class="required">(Must be 4-20 characters)</small>
+                        </div>
+                        <div class="form-group">
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.email(class="form-control input-form", placeholder="Email") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-control  is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.password(class="form-control input-form", placeholder="Password") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {% if form.confirm_password.errors %}
+                                {{ form.confirm_password(class="form-control is-invalid") }} 
+                                <div class="invalid-feedback">
+                                    {% for error in form.confirm_password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.confirm_password(class="form-control input-form", placeholder="Confirm Password") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-secondary") }}
+                    </div>
+                </form>
+                <div>
+                    <small>
+                        Already a member? <a href="{{ url_for('login') }}">LOGIN</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row events-list-con">
+       <div class="col">
+           <div class="page-title">
+               <span>List of Events</span>
+           </div>
+        
+    
+            {% for event in events %}
+                <div class="row list-entry">
+                    <div class="list-thumbnail">
+                        <img class="img-fluid" src="{{ url_for('static', filename='uploads/events/' + event.username + '/logo/' + event.event_image) }}">
+                    </div>
+                    <div class="col list-details">
+                        <div>
+                            <span class="title"><a href="{{ event.username }}">{{ event.name.title() }}</a></span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Location:</span> <span>{{ event.city.title() }}</span>
+                        </div>
+                        <div>
+                            <span class="subtitle">Genre:</span> <span>{{ event.genre.title() }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+        
+    
+</main>
+{% endblock content %}

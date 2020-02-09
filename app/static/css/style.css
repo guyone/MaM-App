@@ -1,0 +1,489 @@
+body {
+    background-color: darkgrey;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* Main Home Page */
+
+.main-events-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+
+.main-news-list-con {
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+/* Unsorted */
+
+.brand-logo {
+    width: 15%;
+}
+
+.color {
+    background-color: black;
+}
+
+.required {
+    color: red;
+}
+
+.profile-img-size {
+    width: 15%;
+}
+
+.post-img {
+    width: 5%;
+}
+
+.user-post {
+    padding: 5px;
+    border: black 1px solid;
+}
+
+.user-posts {
+    margin: 5px;
+}
+
+.is-active {
+    color: green;
+}
+
+/* LOGIN SCREEN */
+
+.login-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.login-form {
+    margin: auto;
+    width: 50%;
+}
+
+.login-form a:link {
+    text-decoration: none;
+}
+
+input.input-form {
+    background-color : #F3F2F2;
+    width: 50%;
+  }
+
+/* Footer */
+
+.footer-copyright {
+    color: white;
+}
+
+.footer-copyright a {
+    color: white;
+}
+
+/* Bootstrap Alert Msgs */
+
+.alert {
+    margin-top: 10px;
+    padding: 25px;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Settings Page */
+
+.settings-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.settings-aligned {
+    margin: auto;
+}
+
+.settings-img {
+    padding: 10px;
+}
+
+.account-info {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.profile-img-list {
+    margin: 5px;
+}
+
+.settings-form {
+    margin: auto;
+    width: 50%;
+}
+
+.settings-email {
+    padding-top: 25px;
+}
+
+.awards-con {
+    margin-top: 20px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.settings-awards .icon {
+    width: 25px;
+}
+
+.settings-password {
+    padding-top: 25px;
+}
+
+/* User List Page */
+
+.user-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.user-list-con .list-thumbnail {
+    width: 75px;
+    margin: auto;
+}
+
+.user-list-con .list-entry {
+    margin-bottom: 15px;
+}
+
+.user-list-con .list-details {
+    margin: auto;
+}
+
+/* User Pages */
+
+.user-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.profile-pic {
+    width: 150px;
+}
+
+/* General Profile Pages */
+
+.links-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.social-icon {
+    width: 50px;
+}
+
+.img-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.profile-img {
+    max-width: 100%;
+    border-radius: 5px;
+    border: black solid 1px;
+}
+
+/* Band Pages */
+
+.band-logo {
+    width: 250px;
+}
+
+.links-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.band-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.edit-con {
+    margin: auto;
+    width: 75%;
+}
+
+.subtitle {
+    font-weight: bold;
+    color: rgb(143, 143, 143);
+}
+
+.title {
+    font-weight: bold;
+    color: rgb(65, 65, 65);
+    font-size: 25px;
+}
+
+.page-title {
+    color: rgb(65, 65, 65);
+    font-size: 35px;
+    padding-bottom: 15px;
+}
+
+.band-con .stats {
+    padding-top: 5px;
+}
+
+/* General changes */
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vertical-center {
+    margin: auto;
+    align-items: center;
+}
+
+/* Band List Page */
+
+.band-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.band-list-con .list-thumbnail {
+    width: 175px;
+    /* margin: 10px; */
+    margin: auto;
+}
+
+.band-list-con .list-entry {
+    margin-bottom: 15px;
+}
+
+.band-list-con .list-details {
+    margin: auto;
+}
+
+/* Venue List Page */
+
+.venue-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.venue-list-con .list-thumbnail {
+        width: 150px;
+        margin: auto;
+}
+
+.venue-list-con .list-entry {
+    margin-bottom: 15px;
+}
+
+.venue-list-con .list-details {
+    margin: auto;
+}
+
+/* Venue Page */
+
+.venue-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.venue-con .stats {
+    padding-top: 5px;
+}
+
+/* Profile Page News */
+
+.news-entry {
+    margin-bottom: 15px;
+}
+
+.news-icon {
+    padding: 10px;
+    margin: auto;
+}
+
+.news-title {
+    margin-right: 5px;
+    color: rgb(65, 65, 65);
+    font-weight: bold;
+}
+
+.news-article {
+    padding-left: 15px;
+    margin: auto;
+}
+
+.news-date {
+    font-size: 14px;
+}
+
+/* Profile Page Events */
+
+.event-entry {
+    margin-bottom: 15px;
+}
+
+.event-location {
+    padding-left: 15px;
+    margin: auto;
+    border-right: 1px solid black;
+}
+
+.event-icon {
+    padding: 10px;
+    margin: auto;
+}
+
+.event-date {
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.event-venue {
+    font-size: 14px;
+}
+
+.event-details {
+    margin: auto;
+    margin-left: 15px;
+}
+
+.event-title {
+    margin-right: 5px;
+    color: rgb(65, 65, 65);
+    font-weight: bold;
+}
+
+.event-bandlist {
+    font-size: 14px;
+}
+
+/* Festival List Page */
+
+.festival-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.festival-list-con .list-thumbnail {
+        width: 150px;
+        margin: auto;
+}
+
+.festival-list-con .list-entry {
+    margin-bottom: 15px;
+}
+
+.festival-list-con .list-details {
+    margin: auto;
+}
+
+/* Festival Pages */
+
+.festival-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.festival-logo {
+    width: 250px;
+}
+
+/* Events List Page */
+
+.events-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+/* Promoters List Page */
+
+.promoters-list-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}

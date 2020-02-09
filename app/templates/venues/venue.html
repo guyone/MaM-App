@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <div class="row venue-con">
+                    <div class="col">
+                        <div class="title">
+                            <span>{{ venue.name }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="stats">
+                                    <span class="subtitle">Founded:</span> <span>{{ venue.founded }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Status:</span> <span>{{ venue.is_active }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Capacity:</span> <span>{{ venue.capacity }}</span>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="stats">
+                                    <span class="subtitle">Phone:</span> <span>{{ venue.phone_number }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Address:</span> <span>{{ venue.unit_number }}-{{ venue.street_number }} {{ venue.street_name.title() }} {{ venue.city.title() }}, {{ venue.province }} {{ venue.postal_code }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row venue-con">
+                    <div class="col">
+                        <span class="title">NEWS</span>
+                        <div class="row news-entry">
+                            <div class="news-icon">
+                                <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                            </div>
+                            <div class="col news-article">
+                                <div class="row news-title">
+                                    <span>ArkenFire has entered the studio to record their debut full-length album!</span>
+                                </div>
+                                <div class="row news-date">
+                                    <span>December 21, 2019</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row venue-con">
+                    <div class="col">
+                        <span class="title">EVENTS</span>
+                        <div class="row event-entry">
+                            <div class="event-icon">
+                                <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                            </div>
+                            <div class="event-location">
+                                <div class="row event-date">
+                                    <span>May 15, 2020</span>
+                                </div>
+                                <div class="row event-venue">
+                                    <span>Muninn's Post</span>
+                                </div>
+                            </div>
+                            <div class="col event-details">
+                                <div class="row event-title">
+                                    <span>ArkenFire Release Party</span>
+                                </div>
+                                <div class="row event-bandlist">
+                                    <span>ArkenFire, OdinFist, Eden Echo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- Sidebar - Band logo and social icons -->
+            <div class="col-4">
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/venues/' + venue.username + '/imgs/' + venue.venue_pic) }}" alt="{{ venue.name }}">
+                </div>
+                <div class="row links-con">
+                    <div class="col">
+                        <a href="{{ venue.website }}"><img class="img-fluid social-icon" src="/static/imgs/icons/website2.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ venue.facebook }}"><img class="img-fluid social-icon" src="/static/imgs/icons/facebook.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ venue.twitter }}"><img class="img-fluid social-icon" src="/static/imgs/icons/twitter.png"></a>
+                    </div> 
+                    <div class="col">
+                        <a href="{{ venue.instagram }}"><img class="img-fluid social-icon" src="/static/imgs/icons/instagram.png"></a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if current_user.admin %}
+        <div>
+            <input name="action" class="btn btn-outline-secondary" type="submit" value="EDIT venue" onclick="window.location='{{ url_for('edit_venue', venue=venue.username) }}'"/>
+        </div>
+    {% endif %}
+</main>
+{% endblock content %}

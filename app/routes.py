@@ -549,7 +549,7 @@ def promoters():
 @app.route('/registerpromoter/', methods=['GET', 'POST'])
 def promoter_register():
     form = RegisterPromoterForm()
-    return render_template('promoters/register.html', title='Register', form=form)
+    return render_template('promoters/register.html', form=form)
 
 @app.route('/post/new/', methods=['GET', 'POST'])
 @login_required

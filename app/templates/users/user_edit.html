@@ -64,6 +64,19 @@
                                     {{ form.promoter(class="form-control") }}
                                 {% endif %}
                             </div>
+                            <div class="form-group">
+                                {{ form.editor.label(class="form-control-label") }}
+                                {% if form.editor.errors %}
+                                    {{ form.editor(class="form-control is-invalid") }} 
+                                    <div class="invalid-feedback">
+                                        {% for error in form.editor.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.editor(class="form-control") }}
+                                {% endif %}
+                            </div>
                         </fieldset>
                         <div class="form-group">
                             {{ form.submit(class="btn btn-outline-secondary") }}

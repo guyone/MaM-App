@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+    <div class="row band-list-con">
+       <div class="col">
+           <div class="page-title">
+               <span>News Articles</span>
+           </div>
+           <div>
+               <a href="{{ url_for('new_news') }}">Newest</a>
+           </div>
+        
+    
+           {% for new in news %}
+                    <div class="row news-entry">
+                        <div class="news-icon">
+                            <a href="
+                            {% if new.band_id != None %}
+                                {{ url_for('band_news', band=new.band.username, title_url=new.title_url) }}
+                            {% elif new.venue_id != None %}
+                                {{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}
+                            {% elif new.festival_id != None %}
+                                {{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}
+                            {% endif %}
+                            "><img class="img-fluid social-icon" src="{{ url_for('static', filename='uploads/news/imgs/' + new.image) }}"></a>
+                        </div>
+                        <div class="col news-article">
+                            <div class="row news-title">
+                                <div>
+                                    <a href="
+                                    {% if new.band_id != None %}
+                                        {{ url_for('band_news', band=new.band.username, title_url=new.title_url) }}
+                                    {% elif new.venue_id != None %}
+                                        {{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}
+                                    {% elif new.festival_id != None %}
+                                        {{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}
+                                    {% endif %}
+                                    ">{{ new.title }}</a>
+                                </div>
+                            </div>
+                            <div class="row news-date">
+                                <div class="news-submitted">
+                                    <span>Submitted by</span>
+                                </div>
+                                <div class="news-submitter">
+                                    <a href="/u/{{ new.submitter.username }}">{{ new.submitter.username }}</a>
+                                </div>
+                                <div>
+                                    <span>{{ new.created_on.strftime('%I:%M%p on %b %d, %Y') }}</span>
+                                </div>
+                            </div>
+                            <div class="row news-links">
+                                {% if new.band_id != None %}
+                                <div>
+                                    <a href="/b/{{ new.band.username }}">{{ new.band.name }}</a>
+                                </div>
+                                {% endif %}
+                                {% if new.venue_id != None %}
+                                <div {% if new.band_id and new.venue_id %} class="news-title-divider" {% endif %}>
+                                    <a href="/v/{{ new.venue.username }}">{{ new.venue.name }}</a>
+                                </div>
+                                {% endif %}
+                                {% if new.festival_id != None %}
+                                <div {% if new.band_id and new.festival_id %} class="news-title-divider" {% endif %}>
+                                    <a href="/f/{{ new.festival.username }}">{{ new.festival.name }}</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+    
+        
+    
+</main>
+{% endblock content %}

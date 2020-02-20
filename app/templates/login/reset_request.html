@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<main class="container">
+<main class="container-fluid">
     <div class="row">
         <div class="col main-con">
-            <div class="settings-con">
-                <div class="content-section edit-con">
+                <div class="content-section login-form">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">

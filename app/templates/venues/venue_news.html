@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <div class="row venue-con">
+                    <div class="col">
+                        <div class="title">
+                            <span>{{ venue.name }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="stats">
+                                    <span class="subtitle">Founded:</span> <span>{{ venue.founded }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Status:</span> <span>{{ venue.is_active }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Capacity:</span> <span>{{ venue.capacity }}</span>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="stats">
+                                    <span class="subtitle">Phone:</span> <span>{{ venue.phone_number }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Address:</span> <span>{{ venue.unit_number }}-{{ venue.street_number }} {{ venue.street_name.title() }} {{ venue.city.title() }}, {{ venue.province }} {{ venue.postal_code }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row venue-con">
+                    <div class="col">
+                        <a class="title" href="/v/{{ venue.username }}/news">NEWS</a>
+                        {% for new in news %}
+                        <div class="row news-entry">
+                            <div class="news-icon">
+                                <a href="{{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}"><img class="img-fluid social-icon" src="{{ url_for('static', filename='uploads/news/imgs/' + new.image) }}"></a>
+                            </div>
+                            <div class="col news-article">
+                                <div class="row news-title">
+                                    <div>
+                                        <a href="{{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}">{{ new.title }}</a>
+                                    </div>
+                                </div>
+                                <div class="row news-date">
+                                    <div class="news-submitted">
+                                        <span>Submitted by</span>
+                                    </div>
+                                    <div class="news-submitter">
+                                        <a href="/u/{{ new.submitter.username }}">{{ new.submitter.username }}</a>
+                                    </div>
+                                    <div>
+                                        <span>{{ new.created_on.strftime('%I:%M%p on %b %d, %Y') }}</span>
+                                    </div>
+                                </div>
+                                <div class="row news-links">
+                                    {% if new.band_id != None %}
+                                        <div>
+                                            <a href="/b/{{ new.band.username }}">{{ new.band.name }}</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- Sidebar - Band logo and social icons -->
+            <div class="col-4">
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/venues/' + venue.username + '/imgs/' + venue.venue_pic) }}" alt="{{ venue.name }}">
+                </div>
+                <div class="row links-con">
+                    <div class="col">
+                        <a href="{{ venue.website }}"><img class="img-fluid social-icon" src="/static/imgs/icons/website2.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ venue.facebook }}"><img class="img-fluid social-icon" src="/static/imgs/icons/facebook.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ venue.twitter }}"><img class="img-fluid social-icon" src="/static/imgs/icons/twitter.png"></a>
+                    </div> 
+                    <div class="col">
+                        <a href="{{ venue.instagram }}"><img class="img-fluid social-icon" src="/static/imgs/icons/instagram.png"></a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if current_user.admin %}
+        <div>
+            <input name="action" class="btn btn-outline-secondary" type="submit" value="EDIT venue" onclick="window.location='{{ url_for('edit_venue', venue=venue.username) }}'"/>
+        </div>
+    {% endif %}
+</main>
+{% endblock content %}

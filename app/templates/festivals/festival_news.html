@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <div class="row festival-con">
+                    <div class="col-4 vertical-center">
+                            <img class="img-fluid center festival-logo" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/logo/' + festival.logo) }}">
+                    </div>
+                    <div class="col-8">
+                        <div class="title">
+                            <span>{{ festival.name }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="stats">
+                                    <span class="subtitle">Founded:</span> <span>{{ festival.founded }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Status:</span class="subtitle"> <span>{{ festival.is_active }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Capacity:</span class="subtitle"> <span>{{ festival.capacity }}</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="stats">
+                                    <span class="subtitle">Phone:</span class="subtitle"> <span>{{ festival.phone_number }}</span>
+                                </div>
+                                <div class="stats">
+                                    <span class="subtitle">Address:</span class="subtitle"> <span>{{ festival.unit_number }}-{{ festival.street_number }} {{ festival.street_name.title() }} {{ festival.city.title() }}, {{ festival.province }} {{ festival.postal_code }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row festival-con">
+                    <div class="col">
+                        <a class="title" href="/f/{{ festival.username }}/news">NEWS</a>
+                        {% for new in news %}
+                            <div class="row news-entry">
+                                <div class="news-icon">
+                                    <a href="{{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}"><img class="img-fluid social-icon" src="{{ url_for('static', filename='uploads/news/imgs/' + new.image) }}"></a>
+                                </div>
+                                <div class="col news-article">
+                                    <div class="row news-title">
+                                        <div>
+                                            <a href="{{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}">{{ new.title }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="row news-date">
+                                        <div class="news-submitted">
+                                            <span>Submitted by</span>
+                                        </div>
+                                        <div class="news-submitter">
+                                            <a href="/u/{{ new.submitter.username }}">{{ new.submitter.username }}</a>
+                                        </div>
+                                        <div>
+                                            <span>{{ new.created_on.strftime('%I:%M%p on %b %d, %Y') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row news-links">
+                                        {% if new.band_id != None %}
+                                        <div>
+                                            <a href="/b/{{ new.band.username }}">{{ new.band.name }}</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- Sidebar - Festival logo and social icons -->
+            <div class="col-4">
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/imgs/' + festival.festival_pic) }}" alt="{{ festival.name }}">
+                </div>
+                <div class="row img-con">
+                    <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/festivals/' + festival.username + '/imgs/' + festival.grounds_map) }}" alt="{{ festival.name }}">
+                </div>
+                <div class="row links-con">
+                    <div class="col">
+                        <a href="{{ festival.website }}"><img class="img-fluid social-icon" src="/static/imgs/icons/website2.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ festival.facebook }}"><img class="img-fluid social-icon" src="/static/imgs/icons/facebook.png"></a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ festival.twitter }}"><img class="img-fluid social-icon" src="/static/imgs/icons/twitter.png"></a>
+                    </div> 
+                    <div class="col">
+                        <a href="{{ festival.instagram }}"><img class="img-fluid social-icon" src="/static/imgs/icons/instagram.png"></a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if current_user.admin %}
+        <div>
+            <input name="action" class="btn btn-outline-secondary" type="submit" value="EDIT FESTIVAL" onclick="window.location='{{ url_for('edit_festival', festival=festival.username) }}'"/>
+        </div>
+    {% endif %}
+</main>
+{% endblock content %}

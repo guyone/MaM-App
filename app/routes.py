@@ -12,18 +12,20 @@ from app import app, db, bcrypt, mail
 from app.forms import (RegistrationForm, LogInForm, NewBandForm, NewVenueForm, NewFestivalForm,
                        UpdateAccountEmailForm, ThreadForm, UpdateBandForm, UpdateVenueForm, UpdateFestivalForm,
                        RequestResetForm, ResetPasswordForm, UpdateAccountPasswordForm, UpdateUser, UpdateUserProfilePic,
-                       RegisterPromoterForm)
-from app.models import User, Band, Thread, Event, Venue, Festival
+                       RegisterPromoterForm, NewNewsForm)
+from app.models import User, Band, Thread, Event, Venue, Festival, News
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import desc
 from flask_mail import Message
 from app.token import confirm_token, generate_confirmation_token
 from app.images import *
+from app.functions import *
 
 @app.route('/')
 def home():
     posts = reversed(Thread.query.all())
-    return render_template('home.html', title='Home', posts=posts)
+    news = reversed(News.query.all())
+    return render_template('home.html', title='Home', posts=posts, news=news)
 
 @app.route('/about/')
 def about():
@@ -194,6 +196,8 @@ def edit_user(username):
         user.username = form.username.data
         user.email = form.email.data
         user.admin = form.admin.data
+        user.promoter = form.promoter.data
+        user.editor = form.editor.data
         db.session.commit()
         flash('%s has been updated!' % user.username, 'success')
         return redirect(url_for('users'))
@@ -201,6 +205,8 @@ def edit_user(username):
         form.username.data = user.username
         form.email.data = user.email
         form.admin.data = user.admin
+        form.promoter.data = user.promoter
+        form.editor.data = user.editor
     return render_template('users/user_edit.html', user=user, form=form)
 # return redirect(url_for('home'))
 
@@ -237,8 +243,9 @@ def new_band():
         bandcamp=form.bandcamp.data,
         city=form.city.data,
         province=form.province.data,
-        country=form.country.data)
-        band.username=re.sub(r"\s+", "", band.name).lower()
+        country=form.country.data,
+        submitter_id=current_user.id)
+        band.username = urlify_username(band.name).lower()
         os.mkdir(f'app/static/uploads/bands/{band.username}')
         os.mkdir(f'app/static/uploads/bands/{band.username}/logo/')
         os.mkdir(f'app/static/uploads/bands/{band.username}/imgs/')
@@ -252,13 +259,28 @@ def new_band():
         db.session.commit()
         flash('A new band has been submitted', 'success')
         return redirect(url_for('b'))
-    return render_template('bands/band_new.html', form=form)
+    return render_template('admin/band_new.html', form=form)
 
 @app.route('/b/<band>/')
 def band(band):
-    band = re.sub(r"\s+", "", band).lower()
+    band = urlify_username(band).lower()
     band = Band.query.filter_by(username=band).first_or_404()
-    return render_template('bands/band.html', band=band)
+    news = reversed(News.query.filter_by(band_id=band.id).all())
+    return render_template('bands/band.html', band=band, news=news)
+
+@app.route('/b/<band>/news/')
+def band_news_list(band):
+    band = urlify_username(band).lower()
+    band = Band.query.filter_by(username=band).first_or_404()
+    news = reversed(News.query.filter_by(band_id=band.id).all())
+    return render_template('bands/band_news.html', band=band, news=news)
+
+@app.route('/b/<band>/news/<title_url>')
+def band_news(band, title_url):
+    band = urlify_username(band).lower()
+    band = Band.query.filter_by(username=band).first_or_404()
+    article = News.query.filter_by(band_id=band.id, title_url=title_url).first_or_404()
+    return render_template('news/news_article.html', article=article)
 
 @app.route('/b/<band>/edit', methods=['GET', 'POST'])
 @login_required
@@ -293,7 +315,7 @@ def edit_band(band):
         band.city = form.city.data
         band.province = form.province.data
         band.country = form.country.data
-        band.username=re.sub(r"\s+", "", band.name).lower()
+        band.username = urlify_username(band.name).lower()
         db.session.commit()
         flash('%s has been updated!' % band.name, 'success')
         return redirect(url_for('b'))
@@ -343,7 +365,7 @@ def new_venue():
         instagram=form.instagram.data,
         city=form.city.data,
         capacity=form.capacity.data)
-        venue.username=re.sub(r"\s+", "", venue.name).lower()
+        venue.username = urlify_username(venue.name).lower()
         os.mkdir(f'app/static/uploads/venues/{venue.username}')
         os.mkdir(f'app/static/uploads/venues/{venue.username}/imgs/')
         if form.venue_pic.data:
@@ -353,12 +375,27 @@ def new_venue():
         db.session.commit()
         flash('A new venue has been submitted', 'success')
         return redirect(url_for('v'))
-    return render_template('venues/venue_new.html', title='New Venue', form=form)
+    return render_template('admin/venue_new.html', title='New Venue', form=form)
 
 @app.route('/v/<venue>/')
 def venue(venue):
     venue = Venue.query.filter_by(username=venue).first_or_404()
-    return render_template('venues/venue.html', venue=venue)
+    news = reversed(News.query.filter_by(venue_id=venue.id).all())
+    return render_template('venues/venue.html', venue=venue, news=news)
+
+@app.route('/v/<venue>/news/')
+def venue_news_list(venue):
+    venue = urlify_username(venue).lower()
+    venue = Venue.query.filter_by(username=venue).first_or_404()
+    news = reversed(News.query.filter_by(venue_id=venue.id).all())
+    return render_template('venues/venue_news.html', venue=venue, news=news)
+
+@app.route('/v/<venue>/news/<title_url>')
+def venue_news(venue, title_url):
+    venue = urlify_username(venue).lower()
+    venue = Venue.query.filter_by(username=venue).first_or_404()
+    article = News.query.filter_by(venue_id=venue.id, title_url=title_url).first_or_404()
+    return render_template('news/news_article.html', article=article)
 
 @app.route('/v/<venue>/edit', methods=['GET', 'POST'])
 @login_required
@@ -446,7 +483,7 @@ def new_festival():
         instagram=form.instagram.data,
         city=form.city.data,
         capacity=form.capacity.data)
-        festival.username=re.sub(r"\s+", "", festival.name).lower()
+        festival.username=festival.name.replace(" ", "").lower()
         os.mkdir(f'app/static/uploads/festivals/{festival.username}')
         os.mkdir(f'app/static/uploads/festivals/{festival.username}/logo/')
         os.mkdir(f'app/static/uploads/festivals/{festival.username}/imgs/')
@@ -463,12 +500,28 @@ def new_festival():
         db.session.commit()
         flash('A new festival has been submitted', 'success')
         return redirect(url_for('f'))
-    return render_template('festivals/festival_new.html', title='New Festival', form=form)
+    return render_template('admin/festival_new.html', title='New Festival', form=form)
 
 @app.route('/f/<festival>/')
 def festival(festival):
     festival = Festival.query.filter_by(username=festival).first_or_404()
-    return render_template('festivals/festival.html', festival=festival)
+    news = reversed(News.query.filter_by(festival_id=festival.id).all())
+    return render_template('festivals/festival.html', festival=festival, news=news)
+
+@app.route('/f/<festival>/news/')
+def festival_news_list(festival):
+    festival = urlify_username(festival).lower()
+    festival = Festival.query.filter_by(username=festival).first_or_404()
+    news = reversed(News.query.filter_by(festival_id=festival.id).all())
+    return render_template('festivals/festival_news.html', festival=festival, news=news)
+
+@app.route('/f/<festival>/news/<title_url>')
+def festival_news(festival, title_url):
+    festival = urlify_username(festival).lower()
+    festival = Festival.query.filter_by(username=festival).first_or_404()
+    article = News.query.filter_by(festival_id=festival.id, title_url=title_url).first_or_404()
+    return render_template('news/news_article.html', article=article)
+
 
 @app.route('/f/<festival>/edit', methods=['GET', 'POST'])
 @login_required
@@ -542,6 +595,8 @@ def events():
     events = Event.query.all()
     return render_template('events/events.html', events=events, title='Events')
 
+# These bellow still need to be worked on
+
 @app.route('/promoters/')
 def promoters():
     return render_template('promoters/promoters.html', title='Promoters')
@@ -550,6 +605,49 @@ def promoters():
 def promoter_register():
     form = RegisterPromoterForm()
     return render_template('promoters/register.html', form=form)
+
+@app.route('/news/')
+def news():
+    news = News.query.all()
+    return render_template('news/news.html', news=news)
+
+@app.route('/news/new')
+def new_news():
+    news = reversed(News.query.all())
+    return render_template('news/news.html', news=news)
+
+@app.route('/news/new_article/', methods=['GET', 'POST'])
+@login_required
+def new_article():
+    form = NewNewsForm()
+    if form.validate_on_submit():
+        news = News(title=form.title.data,
+                    text=form.text.data,
+                    submitter_id=current_user.id)
+        if form.band.data:
+            news.band_id = form.band.data.id
+        if form.venue.data:
+            news.venue_id = form.venue.data.id
+        if form.festival.data:
+            news.festival_id = form.festival.data.id
+        if form.image.data:
+            pic = save_news_pic(form.image.data)
+            news.image = pic
+        news.title_url = urlify_title(news.title).lower()
+        db.session.add(news)
+        db.session.commit()
+        return redirect('/news/')
+    return render_template('news/create_news.html', form=form)
+
+# @app.route('/news/<int:news_id>')
+# def news_article(news_id):
+#     article = News.query.get_or_404(news_id)
+#     return render_template('news/news_article.html', article=article)
+
+# @app.route('/news/<title_url>')
+# def news_url(title_url):
+#     article = News.query.filter_by(title_url=title_url).first_or_404()
+#     return render_template('news/news_article.html', article=article)
 
 @app.route('/post/new/', methods=['GET', 'POST'])
 @login_required
@@ -561,7 +659,7 @@ def new_post():
         db.session.commit()
         flash('Your post as been created!', 'success')
         return redirect('/')
-    return render_template('new_post.html', title='New Post', form=form)
+    return render_template('threads/new_post.html', title='New Post', form=form)
 
 @app.route('/post/<int:post_id>')
 def post(post_id):

@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container-fluid">
+    <div class="row">
+       <div class="col-8">
+            <div class="row news-article-con">
+                <div class="col">
+                    <div class="page-title">
+                        <span>{{ article.title.title() }}</span>
+                    </div>
+                    <div class="col news-meta">
+                        <div class="row">
+                            <span>Submitted by <a href="/u/{{ article.submitter.username }}">{{ article.submitter.username }}</a> at {{ moment(article.created_on).format('h:mm:ss a on ddd MMM Do, YYYY') }}</span>
+                        </div>
+                        <div class="row news-article-links">
+                            {% if article.band_id != None %}
+                            <div>
+                                <a href="/b/{{ article.band.username }}">{{ article.band.name }}</a>
+                            </div>
+                            {% endif %}
+                            {% if article.venue_id != None %}
+                            <div {% if article.band_id and article.venue_id %} class="news-title-divider" {% endif %}>
+                                <a href="/v/{{ article.venue.username }}">{{ article.venue.name }}</a>
+                            </div>
+                            {% endif %}
+                            {% if article.festival_id != None %}
+                            <div {% if article.band_id and article.festival_id %} class="news-title-divider" {% endif %}>
+                                <a href="/f/{{ article.festival.username }}">{{ article.festival.name }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+
+                    <div class="news-center">
+                        <img class="img-fluid center news-img" src="{{ url_for('static', filename='uploads/news/imgs/' + article.image) }}">
+                    </div>
+
+                    <div class="news-content">
+                        <span>{{ article.text }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+
+            {% if article.band_id != None %}
+            <div class="row links-con">
+                <div class="col">
+                    <a href="/b/{{ article.band.username }}"><img class="img-fluid news-band-logo" src="{{ url_for('static', filename='uploads/bands/' + article.band.username + '/logo/' + article.band.logo) }}"></a>
+                </div>
+                <div class="col news-band-stats">
+                    <div class="stats">
+                        <span class="subtitle">Name:</span> <span>{{ article.band.name }}</span>
+                    </div>
+                    <div class="stats">
+                        <span class="subtitle">Genre:</span> <span>{{ article.band.genre }}</span>
+                    </div>
+                    <div class="stats">
+                        <span class="subtitle">Location:</span> <span>{{ article.band.city }}, {{ article.band.province }}</span>
+                    </div>
+                </div> 
+            </div>
+            {% endif %}
+            {% if article.venue_id != None %}        
+            <div class="row links-con">
+                <div>
+                    <a href="/v/{{ article.venue.username }}"><span class="title">{{ article.venue.name }}</span></a>
+                </div>
+                <div class="row">
+                    <div class="col img-con">
+                        <img class="img-fluid center profile-img" src="{{ url_for('static', filename='uploads/venues/' + article.venue.username + '/imgs/' + article.venue.venue_pic) }}" alt="{{ article.venue.name }}">
+                    </div>
+                    <div class="col news-band-stats">
+                        <div class="stats">
+                            <span class="subtitle">Location:</span> <span>{{ article.venue.city }}, {{ article.venue.province }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if article.festival_id != None %}
+            <div class="row links-con">
+                <div class="col">
+                    <a href="/f/{{ article.festival.username }}"><img class="img-fluid news-band-logo" src="{{ url_for('static', filename='uploads/festivals/' + article.festival.username + '/logo/' + article.festival.logo) }}"></a>
+                </div>
+                <div class="col news-band-stats">
+                    <div class="stats">
+                        <span class="subtitle">Location:</span> <span>{{ article.festival.city }}, {{ article.festival.province }}</span>
+                    </div>
+                </div> 
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</main>
+
+{% endblock content %}

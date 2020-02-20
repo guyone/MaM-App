@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField, SelectField, DateTimeField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, URL
 from app.models import User, Band, Venue, Festival
-from app import bcrypt
+from app import bcrypt, db
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)])
@@ -28,6 +29,7 @@ class UpdateUser(FlaskForm):
     email = StringField('Email: ', validators=[Email()])
     admin = BooleanField('Is this user an admin?')
     promoter = BooleanField('Is this user a Promoter?')
+    editor = BooleanField('Is this user an editor?')
     submit = SubmitField('UPDATE')
 
     def validate_username(self, username):
@@ -244,9 +246,54 @@ class UpdateFestivalForm(FlaskForm):
             if festival:
                 raise ValidationError('That festival is already in the database.')
 
+class NewEventForm(FlaskForm):
+
+    def list_of_locations(self):
+        return db.session.query(Venue).all()
+
+    name = StringField('Event name:', validators=[DataRequired()])
+    date = DateTimeField('Date and time of event:', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S') # need a good date selector on the page
+    event_image = FileField('Upload event poster:', validators=[FileAllowed(['jpg', 'png'])])
+    description = TextAreaField('Description of event:')
+    start_time = DateTimeField('Doors open at:', validators=[DataRequired()], format='%H:%M:%S')
+    set_time = DateTimeField('Set time:', validators=[DataRequired()], format='%H:%M:%S')
+    bands = StringField('Bands playing:', validators=[DataRequired()])
+    location = QuerySelectField('location of event:', validators=[DataRequired()], query_factory=list_of_locations)
+    tickets = IntegerField('Number of tickets:',validators=[DataRequired()])
+
+    def check_total_tickets(self, tickets):
+        #Check this against the capacity of a venue
+        pass
+
 class ThreadForm(FlaskForm):
     title = StringField('Title of post:', validators=[DataRequired()])
     text = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('POST')
+
+class NewNewsForm(FlaskForm):
+
+    title = StringField('Title of news article:', validators=[DataRequired()])
+    text = TextAreaField('Content:', validators=[DataRequired()])
+    tags = StringField('Tags:', validators=[DataRequired()])
+    image = FileField('Upload related image:', validators=[FileAllowed(['jpg', 'png'])])
+    band = QuerySelectField(
+        'Band:',  
+        query_factory=lambda: db.session.query(Band).all(),
+        get_label=lambda item: item.name,
+        get_pk=lambda item: item.id,
+        allow_blank=True)
+    venue = QuerySelectField(
+        'Venue:', 
+        query_factory=lambda: db.session.query(Venue).all(),
+        get_label=lambda item: item.name,
+        get_pk=lambda item: item.id,
+        allow_blank=True)
+    festival = QuerySelectField(
+        'Festival:', 
+        query_factory=lambda: db.session.query(Festival).all(),
+        get_label=lambda item: item.name,
+        get_pk=lambda item: item.id,
+        allow_blank=True)
     submit = SubmitField('POST')
 
 class RequestResetForm(FlaskForm):

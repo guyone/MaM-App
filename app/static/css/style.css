@@ -271,7 +271,7 @@ input.input-form {
 .page-title {
     color: rgb(65, 65, 65);
     font-size: 35px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 .band-con .stats {
@@ -279,6 +279,16 @@ input.input-form {
 }
 
 /* General changes */
+
+.main-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
 
 .center {
     display: block;
@@ -289,6 +299,15 @@ input.input-form {
 .vertical-center {
     margin: auto;
     align-items: center;
+}
+
+.share-icon {
+    width: 18px;
+}
+
+.bandcamp-playlist {
+    padding-top: 10px;
+    margin: auto;
 }
 
 /* Band List Page */
@@ -357,7 +376,17 @@ input.input-form {
     padding-top: 5px;
 }
 
-/* Profile Page News */
+/* News Entry */
+
+.news-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
 
 .news-entry {
     margin-bottom: 15px;
@@ -379,8 +408,60 @@ input.input-form {
     margin: auto;
 }
 
+.news-article-con {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: white;
+    border: black solid 1px;
+}
+
+.news-article-links {
+}
+
 .news-date {
+    font-size: 12px;
+}
+
+.news-submitted {
+    margin-right: 4px;
+}
+
+.news-submitter {
+    margin-right: 4px;
+}
+
+.news-band-logo {
+    width: 200px;
+}
+
+.news-img {
+    width: 500px;
+}
+
+.news-meta {
     font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.news-title-divider {
+    border-left: 1px solid black;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+}
+
+.news-band-stats {
+    margin: auto;
+}
+
+.news-content {
+    margin-top: 25px;
+}
+
+.news-links {
+    font-size: 12px;
 }
 
 /* Profile Page Events */
@@ -486,4 +567,8 @@ input.input-form {
     border-radius: 5px;
     background-color: white;
     border: black solid 1px;
+}
+
+.promoter-menu {
+    margin-top: 15px;
 }

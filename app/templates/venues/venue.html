@@ -34,20 +34,39 @@
 
                 <div class="row venue-con">
                     <div class="col">
-                        <span class="title">NEWS</span>
+                        <a class="title" href="/v/{{ venue.username }}/news">NEWS</a>
+                        {% for new in news %}
                         <div class="row news-entry">
                             <div class="news-icon">
-                                <img class="img-fluid social-icon" src="/static/imgs/icons/website2.png">
+                                <a href="{{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}"><img class="img-fluid social-icon" src="{{ url_for('static', filename='uploads/news/imgs/' + new.image) }}"></a>
                             </div>
                             <div class="col news-article">
                                 <div class="row news-title">
-                                    <span>ArkenFire has entered the studio to record their debut full-length album!</span>
+                                    <div>
+                                        <a href="{{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}">{{ new.title }}</a>
+                                    </div>
                                 </div>
                                 <div class="row news-date">
-                                    <span>December 21, 2019</span>
+                                    <div class="news-submitted">
+                                        <span>Submitted by</span>
+                                    </div>
+                                    <div class="news-submitter">
+                                        <a href="/u/{{ new.submitter.username }}">{{ new.submitter.username }}</a>
+                                    </div>
+                                    <div>
+                                        <span>{{ new.created_on.strftime('%I:%M%p on %b %d, %Y') }}</span>
+                                    </div>
+                                </div>
+                                <div class="row news-links">
+                                    {% if new.band_id != None %}
+                                        <div>
+                                            <a href="/b/{{ new.band.username }}">{{ new.band.name }}</a>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
                     </div>
                 </div>
 

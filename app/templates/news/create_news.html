@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col news-con">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Create a news article</legend>
+                    <div class="form-group">
+                        {{ form.title.label(class="form-control-label") }}
+                        {% if form.title.errors %}
+                            {{ form.title(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.text.label(class="form-control-label") }}
+                        {% if form.text.errors %}
+                            {{ form.text(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.text.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.text(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.tags.label(class="form-control-label") }}
+                        <div>
+                            <span>List related bands and venues in proper name seperated with commas. Example: "Living Machines, Death Machine, Rickshaw"</span>
+                        </div>
+                        {% if form.tags.errors %}
+                            {{ form.tags(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.tags.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.tags(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.band.label(class="form-control-label") }}
+                        {% if form.band.errors %}
+                            {{ form.band(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.band.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.band(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.venue.label(class="form-control-label") }}
+                        {% if form.venue.errors %}
+                            {{ form.venue(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.venue.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.venue(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.festival.label(class="form-control-label") }}
+                        {% if form.festival.errors %}
+                            {{ form.festival(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.festival.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.festival(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <span>(Optional)</span>
+                        <span>If you do not upload an image the thumbnail will be the default Metal as Medicine logo. There will also be no image in the news article.</span>
+                        {{ form.image.label(class="form-control-label") }}
+                        {% if form.image.errors %}
+                            {{ form.image(class="form-control is-invalid") }} 
+                            <div class="invalid-feedback">
+                                {% for error in form.image.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.image(class="form-control-file") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-secondary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

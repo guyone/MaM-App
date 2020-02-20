@@ -4,53 +4,94 @@
 <main class="container-fluid">
     <div class="row">
         <div class="col-6">
-            <div class="row main-events-list-con">
-                <div class="col page-title">
+            <div class="main-events-list-con">
+                <div class="page-title">
                     <span>Recent Events</span>
                 </div>
-                <div class="col">
-                    {% for post in posts %}
-                        <article class="user-post content-section">
-                            <div class="media-body">
-                                <div>
-                                    <img class="rounded-circle post-img" src="{{ url_for('static', filename='imgs/' + post.user.profile_pic) }}">
-                                </div>
-                                <div>
-                                    <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
-                                </div>
-                                <div class="article-content">
-                                    <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
-                                    <p>{{ post.text }}</p>
-                                </div>
+                {% for post in posts %}
+                    <article class="user-post content-section">
+                        <div class="media-body">
+                            <div>
+                                <img class="rounded-circle post-img" src="{{ url_for('static', filename='imgs/' + post.user.profile_pic) }}">
                             </div>
-                        </article>
-                    {% endfor %}
-                </div>
+                            <div>
+                                <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
+                            </div>
+                            <div class="article-content">
+                                <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
+                                <p>{{ post.text }}</p>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
             </div>
         </div>
         
         <div class="col-6">
-            <div class="row main-news-list-con">
-                <div class="col page-title">
+            <div class="main-news-list-con">
+                <div class="page-title">
                     <span>Recent News</span>
                 </div>
-                <div class="col">
-                    {% for post in posts %}
-                        <article class="user-post content-section">
-                            <div class="media-body">
+                {% for new in news %}
+                    <div class="row news-entry">
+                        <div class="news-icon">
+                            <a href="
+                            {% if new.band_id != None %}
+                                {{ url_for('band_news', band=new.band.username, title_url=new.title_url) }}
+                            {% elif new.venue_id != None %}
+                                {{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}
+                            {% elif new.festival_id != None %}
+                                {{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}
+                            {% endif %}
+                            "><img class="img-fluid social-icon" src="{{ url_for('static', filename='uploads/news/imgs/' + new.image) }}"></a>
+                        </div>
+                        <div class="col news-article">
+                            <div class="row news-title">
                                 <div>
-                                    <img class="rounded-circle post-img" src="{{ url_for('static', filename='imgs/' + post.user.profile_pic) }}">
-                                </div>
-                                <div>
-                                    <p><a href="/u/{{ post.user.username }}">{{ post.user.username }}</a> at {{ post.created_on.strftime('%I:%M%p on %b %d, %Y') }}</p>
-                                </div>
-                                <div class="article-content">
-                                    <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
-                                    <p>{{ post.text }}</p>
+                                    <a href="
+                                    {% if new.band_id != None %}
+                                        {{ url_for('band_news', band=new.band.username, title_url=new.title_url) }}
+                                    {% elif new.venue_id != None %}
+                                        {{ url_for('venue_news', venue=new.venue.username, title_url=new.title_url) }}
+                                    {% elif new.festival_id != None %}
+                                        {{ url_for('festival_news', festival=new.festival.username, title_url=new.title_url) }}
+                                    {% endif %}
+                                    ">{{ new.title }}</a>
                                 </div>
                             </div>
-                        </article>
-                    {% endfor %}
+                            <div class="row news-date">
+                                <div class="news-submitted">
+                                    <span>Submitted by</span>
+                                </div>
+                                <div class="news-submitter">
+                                    <a href="/u/{{ new.submitter.username }}">{{ new.submitter.username }}</a>
+                                </div>
+                                <div>
+                                    {{ moment(new.created_on).fromNow() }}
+                                </div>
+                            </div>
+                            <div class="row news-links">
+                                {% if new.band_id != None %}
+                                <div>
+                                    <a href="/b/{{ new.band.username }}">{{ new.band.name }}</a>
+                                </div>
+                                {% endif %}
+                                {% if new.venue_id != None %}
+                                <div {% if new.band_id and new.venue_id %} class="news-title-divider" {% endif %}>
+                                    <a href="/v/{{ new.venue.username }}">{{ new.venue.name }}</a>
+                                </div>
+                                {% endif %}
+                                {% if new.festival_id != None %}
+                                <div {% if new.band_id and new.festival_id %} class="news-title-divider" {% endif %}>
+                                    <a href="/f/{{ new.festival.username }}">{{ new.festival.name }}</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div>
+                    <a href="/news">More news...</a>
                 </div>
             </div>
         </div>
